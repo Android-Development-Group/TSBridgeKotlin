@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.tsbridge.fragment
 
 import android.content.Intent

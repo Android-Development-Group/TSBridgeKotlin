@@ -12,7 +12,7 @@ import com.tsbridge.utils.Utils
 import kotlinx.android.synthetic.main.bulletin_item.view.*
 import org.jetbrains.anko.imageView
 import org.jetbrains.anko.linearLayout
-import org.jetbrains.anko.onClick
+import org.jetbrains.anko.sdk25.coroutines.onClick
 
 class BulletinAdapter(private val mContext: Context,
                       private val mBulletins: List<ReceiveBulletin>)

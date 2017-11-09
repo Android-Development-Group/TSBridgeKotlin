@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import com.tsbridge.R
 import com.tsbridge.utils.Utils
 import kotlinx.android.synthetic.main.permission_activity.*
-import org.jetbrains.anko.onClick
+import org.jetbrains.anko.sdk25.coroutines.onClick
 
 class PermissionActivity : AppCompatActivity() {
     private var mPermissionName = ""

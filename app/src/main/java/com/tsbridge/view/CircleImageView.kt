@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.tsbridge.view
 
 import android.content.Context
@@ -70,13 +72,13 @@ class CircleImageView : ImageView {
         }
 
     /** 在 java 代码中直接 new 自定义组件对象时，调用一参构造函数 */
-    constructor(context: Context): super(context) {
+    constructor(context: Context) : super(context) {
         initialization()
     }
 
     /** 在 xml 布局中添加组件时，调用的是两参构造函数，进而调用三参函数 */
     @JvmOverloads constructor(context: Context, attrs: AttributeSet, defStyle: Int = 0)
-                                : super(context, attrs, defStyle) {
+            : super(context, attrs, defStyle) {
         val a = context.obtainStyledAttributes(attrs, R.styleable.CircleImageView,
                 defStyle, 0)
         mBorderWidth = a.getDimensionPixelSize(R.styleable.CircleImageView_circle_border_width,
@@ -189,28 +191,10 @@ class CircleImageView : ImageView {
      * *
      * *
      */
-    @Deprecated("")
+    @Deprecated("", ReplaceWith("setFillColor(context.resources.getColor(fillColorRes))"))
     fun setFillColorResource(@ColorRes fillColorRes: Int) {
         setFillColor(context.resources.getColor(fillColorRes))
     }
-
-    var borderWidth: Int
-        get() = mBorderWidth
-        set(borderWidth) {
-            if (borderWidth == mBorderWidth)
-                return
-            mBorderWidth = borderWidth
-            setup()
-        }
-
-    var isBorderOverlay: Boolean
-        get() = mBorderOverlay
-        set(borderOverlay) {
-            if (borderOverlay == mBorderOverlay)
-                return
-            mBorderOverlay = borderOverlay
-            setup()
-        }
 
     override fun setImageBitmap(bm: Bitmap) {
         super.setImageBitmap(bm)
@@ -246,8 +230,8 @@ class CircleImageView : ImageView {
     }
 
     private fun applyColorFilter() {
-        if (mBitmapPaint != null)
-            mBitmapPaint.colorFilter = mColorFilter
+//        if (mBitmapPaint != null)
+        mBitmapPaint.colorFilter = mColorFilter
     }
 
     private fun getBitmapFromDrawable(drawable: Drawable?): Bitmap? {

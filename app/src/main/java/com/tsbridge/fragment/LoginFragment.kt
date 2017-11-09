@@ -25,7 +25,7 @@ import com.tsbridge.activity.PermissionActivity
 import com.tsbridge.entity.User
 import com.tsbridge.utils.Utils
 import kotlinx.android.synthetic.main.login_fragment.*
-import org.jetbrains.anko.onCheckedChange
+import org.jetbrains.anko.sdk25.coroutines.onCheckedChange
 import java.io.File
 
 class LoginFragment : Fragment(), View.OnClickListener {
@@ -64,7 +64,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
         login_in.setOnClickListener(this@LoginFragment)
         login_reg.setOnClickListener(this@LoginFragment)
         login_out.setOnClickListener(this@LoginFragment)
-        login_psw_check.onCheckedChange { compoundButton, b ->
+        login_psw_check.onCheckedChange { _, b ->
             if (b)
                 login_psw.transformationMethod = HideReturnsTransformationMethod.getInstance()
             else
