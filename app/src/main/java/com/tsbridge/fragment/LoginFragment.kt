@@ -46,7 +46,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?)
-                                : View? {
+            : View? {
         Utils.showLog("LoginFragment onCreateView")
 
         return inflater.inflate(R.layout.login_fragment, container, false)
@@ -81,13 +81,14 @@ class LoginFragment : Fragment(), View.OnClickListener {
             R.id.login_in -> loginInBtn()
             R.id.login_reg -> loginRegBtn()
             R.id.login_out -> loginOutBtn()
-            else -> { }
+            else -> {
+            }
         }
     }
 
     private fun setLoginInfo() {
         var user = BmobUser.getCurrentUser(User::class.java)
-        if(user != null) {
+        if (user != null) {
             login_name.setText(user.username)
             Utils.setImageToView(activity, null, user.imageFile?.fileUrl, login_image)
         }
@@ -98,7 +99,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
      * 相机拍照：MediaStore.ACTION_IMAGE_CAPTURE
      */
     private fun selectImageBtn() {
-        if(BmobUser.getCurrentUser() != null) {
+        if (BmobUser.getCurrentUser() != null) {
             Utils.showToast(activity, activity.getString(R.string.login_yes_image))
             return
         }
@@ -112,7 +113,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
                     1)
             if (permissionAccessTimes > 1 &&
                     !ActivityCompat.shouldShowRequestPermissionRationale(activity,
-                    Utils.EXTERNAL_STORAGE_PERMISSION)) {
+                            Utils.EXTERNAL_STORAGE_PERMISSION)) {
                 /** 用户拒绝了权限申请并选择了不再显示 */
                 mIsBackFromPermission = true
                 val intent = Intent(activity, PermissionActivity::class.java)
@@ -184,7 +185,8 @@ class LoginFragment : Fragment(), View.OnClickListener {
                     else
                         Utils.showLog("Uri with returned intent is null")
                 }
-                else -> { }
+                else -> {
+                }
             }
         } else {
             Utils.showLog("No selected image")
@@ -209,7 +211,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
     }
 
     private fun loginReg() {
-        if(BmobUser.getCurrentUser() != null) {
+        if (BmobUser.getCurrentUser() != null) {
             Utils.showToast(activity, activity.getString(R.string.login_yes))
             return
         }
@@ -223,7 +225,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
         }
         /** 获取路径一定要用 Utils 中定义的方法，如果使用 uri.path 不同 SDK 结果不同 */
         val file = BmobFile(File(Utils.getPath(activity, mLoginImageUri!!)))
-        file.uploadblock(object: UploadFileListener() {
+        file.uploadblock(object : UploadFileListener() {
             override fun done(e: BmobException?) {
                 if (e == null) {
                     Utils.showLog("Upload image succeed")
@@ -243,7 +245,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
         val user = User(file)
         user.username = mLoginName
         user.setPassword(mLoginPsw)
-        user.signUp(object: SaveListener<User>() {
+        user.signUp(object : SaveListener<User>() {
             override fun done(s: User?, e: BmobException?) {
                 if (s != null && e == null) {
                     Utils.showLog("Register User succeed")
@@ -255,7 +257,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
                     Utils.showLog("Register User failed: " + e?.message
                             + " Error code: " + e?.errorCode)
                     Utils.showToast(activity,
-                            activity.getString(R.string.login_reg_failed)+ ": " + e?.message)
+                            activity.getString(R.string.login_reg_failed) + ": " + e?.message)
                 }
             }
         })
@@ -272,7 +274,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
     }
 
     private fun loginIn() {
-        if(BmobUser.getCurrentUser() != null) {
+        if (BmobUser.getCurrentUser() != null) {
             Utils.showToast(activity, activity.getString(R.string.login_yes))
             return
         }
@@ -285,7 +287,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
         var user = User(null)
         user.username = mLoginName
         user.setPassword(mLoginPsw)
-        user.login(object: SaveListener<User>() {
+        user.login(object : SaveListener<User>() {
             override fun done(s: User?, e: BmobException?) {
                 if (s != null && e == null) {
                     Utils.showLog("Login in succeed")
@@ -297,7 +299,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
                 } else {
                     Utils.showLog("Login in failed: " + e?.message + " Error code: " + e?.errorCode)
                     Utils.showToast(activity,
-                            activity.getString(R.string.login_in_failed)+ ": " + e?.message)
+                            activity.getString(R.string.login_in_failed) + ": " + e?.message)
                 }
             }
         })
@@ -314,7 +316,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
     }
 
     private fun loginOut() {
-        if(BmobUser.getCurrentUser() == null) {
+        if (BmobUser.getCurrentUser() == null) {
             Utils.showToast(activity, activity.getString(R.string.login_no))
             return
         }

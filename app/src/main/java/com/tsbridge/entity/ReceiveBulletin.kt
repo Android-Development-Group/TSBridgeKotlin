@@ -8,10 +8,10 @@ package com.tsbridge.entity
  * 注：在类外部有可能访问成员变量的，需要声明为var/val，否则访问不到
  * 如 BulletinFragment 类获取数据传给 BulletinAdapter 后，需要将值取出显示在列表
  */
-class ReceiveBulletin(val teacherName: String,
-                      val bulletinTime: String,
-                      val bulletinContent: String,
-                      val bulletinImage: String?) {
+data class ReceiveBulletin(val teacherName: String,
+                           val bulletinTime: String,
+                           val bulletinContent: String,
+                           val bulletinImage: String?) {
     init {
         //Utils.showLog("Create a ReceiveBulletin object")
     }

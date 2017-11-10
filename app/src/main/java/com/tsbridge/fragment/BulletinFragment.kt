@@ -76,7 +76,7 @@ class BulletinFragment : Fragment() {
     /** 从云上获取数据之前先进行网络判断 */
     private fun getItemsFromBulletin() {
         if (Utils.isNetWorkConnected(activity))
-            QueryBulletin()
+            queryBulletin()
         else {
             mIsBackFromNetwork = true
             startActivity(Intent(activity, NetworkActivity::class.java))
@@ -91,7 +91,7 @@ class BulletinFragment : Fragment() {
             mIsBackFromNetwork = false
             Utils.mIsBackFromSetNetwork = false
             if (Utils.isNetWorkConnected(activity))
-                QueryBulletin()
+                queryBulletin()
             else {
                 Utils.showToast(activity,
                         activity.getString(R.string.no_connected_network))
@@ -102,7 +102,7 @@ class BulletinFragment : Fragment() {
         }
     }
 
-    private fun QueryBulletin() {
+    private fun queryBulletin() {
         /** 导入数据时进度显示-true，隐藏-false */
         bulletin_refresh.isRefreshing = true
         mIsRefreshing = true
@@ -116,7 +116,7 @@ class BulletinFragment : Fragment() {
             query.order("updatedAt")
         else
             query.order("-updatedAt")
-        if(mBulletinCount > 0) {
+        if (mBulletinCount > 0) {
             var lastDate = mBulletins[0].bulletinTime
             var sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
             var date: Date? = null
@@ -133,12 +133,12 @@ class BulletinFragment : Fragment() {
             }
             query.addWhereGreaterThan("updatedAt", BmobDate(date))
         }
-        query.findObjects(object: FindListener<Bulletin>() {
+        query.findObjects(object : FindListener<Bulletin>() {
             override fun done(`object`: List<Bulletin>, e: BmobException?) {
                 if (e == null) {
                     Utils.showLog("查询成功: 共" + `object`.size + "条Bulletin数据")
 
-                    if (`object`.size > 0)
+                    if (`object`.isNotEmpty())
                         `object`.map {
                             var bulletinT = ReceiveBulletin(it.teacherName,
                                     it.updatedAt,

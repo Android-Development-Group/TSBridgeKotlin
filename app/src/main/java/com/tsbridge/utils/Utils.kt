@@ -52,28 +52,29 @@ object Utils {
     }
 
     fun setImageToView(context: Context, username: String?, imageuri: String?, imageview: ImageView) {
-        if (username != null) {
-            val query = BmobQuery<User>()
-            query.addWhereEqualTo("username", username)
-            query.findObjects(object : FindListener<User>() {
-                override fun done(`object`: List<User>, e: BmobException?) {
-                    if (e == null) {
-                        showLog("查询成功: 共" + `object`.size + "条User数据")
+        when {
+            username != null -> {
+                val query = BmobQuery<User>()
+                query.addWhereEqualTo("username", username)
+                query.findObjects(object : FindListener<User>() {
+                    override fun done(`object`: List<User>, e: BmobException?) {
+                        if (e == null) {
+                            showLog("查询成功: 共" + `object`.size + "条User数据")
 
-                        if (`object`.size > 0)
-                            Glide.with(context.applicationContext)
-                                    .load(`object`[0].imageFile?.fileUrl)
-                                    .into(imageview)
-                        else
-                            showLog("用户'$username'不存在了")
-                    } else
-                        showLog("失败: " + e.message + "," + e.errorCode)
-                }
-            })
-        } else if (imageuri != null)
-            Glide.with(context.applicationContext).load(imageuri).into(imageview)
-        else
-            Glide.with(context.applicationContext).load(R.drawable.black).into(imageview)
+                            if (`object`.isNotEmpty())
+                                Glide.with(context.applicationContext)
+                                        .load(`object`[0].imageFile?.fileUrl)
+                                        .into(imageview)
+                            else
+                                showLog("用户'$username'不存在了")
+                        } else
+                            showLog("失败: " + e.message + "," + e.errorCode)
+                    }
+                })
+            }
+            imageuri != null -> Glide.with(context.applicationContext).load(imageuri).into(imageview)
+            else -> Glide.with(context.applicationContext).load(R.drawable.black).into(imageview)
+        }
     }
 
     /**
@@ -96,7 +97,7 @@ object Utils {
                 val id = DocumentsContract.getDocumentId(uri)
                 val contentUri = ContentUris.withAppendedId(
                         Uri.parse("content://downloads/public_downloads"),
-                                java.lang.Long.valueOf(id))
+                        java.lang.Long.valueOf(id))
                 return getDataColumn(context, contentUri, null, null)
             } else if (isMediaDocument(uri)) {
                 val docId = DocumentsContract.getDocumentId(uri)
@@ -142,19 +143,19 @@ object Utils {
         return null
     }
 
-    fun isExternalStorageDocument(uri: Uri): Boolean {
+    private fun isExternalStorageDocument(uri: Uri): Boolean {
         return "com.android.externalstorage.documents" == uri.authority
     }
 
-    fun isDownloadsDocument(uri: Uri): Boolean {
+    private fun isDownloadsDocument(uri: Uri): Boolean {
         return "com.android.providers.downloads.documents" == uri.authority
     }
 
-    fun isMediaDocument(uri: Uri): Boolean {
+    private fun isMediaDocument(uri: Uri): Boolean {
         return "com.android.providers.media.documents" == uri.authority
     }
 
-    fun isGooglePhotosUri(uri: Uri): Boolean {
+    private fun isGooglePhotosUri(uri: Uri): Boolean {
         return "com.google.android.apps.photos.content" == uri.authority
     }
 
@@ -241,9 +242,8 @@ object Utils {
                                  permissionAccessTimesKey: String,
                                  defaultPermissionAccessTimes: Int): Int {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        val permissionAccessTimes = sharedPreferences.getInt(permissionAccessTimesKey,
+        return sharedPreferences.getInt(permissionAccessTimesKey,
                 defaultPermissionAccessTimes)
-        return permissionAccessTimes
     }
 
     /**

@@ -38,7 +38,7 @@ class SendFragment : Fragment(), View.OnClickListener {
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?)
-                                : View? {
+            : View? {
         Utils.showLog("SendFragment onCreateView")
 
         return inflater.inflate(R.layout.send_fragment, container, false)
@@ -63,7 +63,8 @@ class SendFragment : Fragment(), View.OnClickListener {
             R.id.send_image_sel -> selectImageBtn()
             R.id.send_image_del -> clearImageBtn()
             R.id.send_btn -> sendBulletinBtn()
-            else -> { }
+            else -> {
+            }
         }
     }
 
@@ -83,7 +84,7 @@ class SendFragment : Fragment(), View.OnClickListener {
             /** 用户拒绝了权限申请并选择了不再显示 */
             if (permissionAccessTimes > 1 &&
                     !ActivityCompat.shouldShowRequestPermissionRationale(activity,
-                    Utils.EXTERNAL_STORAGE_PERMISSION)) {
+                            Utils.EXTERNAL_STORAGE_PERMISSION)) {
                 mIsBackFromPermission = true
                 val intent = Intent(activity, PermissionActivity::class.java)
                 intent.putExtra(Utils.PERMISSION_TITLE,
@@ -153,7 +154,8 @@ class SendFragment : Fragment(), View.OnClickListener {
                     else
                         Utils.showLog("Uri with returned intent is null")
                 }
-                else -> { }
+                else -> {
+                }
             }
         } else {
             Utils.showLog("No selected image")
@@ -220,7 +222,7 @@ class SendFragment : Fragment(), View.OnClickListener {
 
     fun insertItemToBulletin(file: BmobFile?) {
         val bulletin = Bulletin(mSendName, mSendContent, file)
-        bulletin.save(object: SaveListener<String>() {
+        bulletin.save(object : SaveListener<String>() {
             override fun done(objectId: String, e: BmobException?) {
                 if (e == null) {
                     Utils.showLog("Insert bulletin succeed: " + objectId)

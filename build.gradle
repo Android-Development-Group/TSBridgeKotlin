@@ -20,7 +20,6 @@ allprojects {
     repositories {
         jcenter()
         google()
-        mavenCentral()
         maven { url "https://jitpack.io" }
         maven { url "https://raw.github.com/bmob/bmob-android-sdk/master" }
     }
@@ -30,6 +29,14 @@ allprojects {
     tasks.whenTaskAdded { task ->
         if (task.name.contains('AndroidTest') || task.name.contains('Test'))
             task.enabled = false
+    }
+}
+
+subprojects {
+    configurations.all {
+        resolutionStrategy {
+//            force 'com.google.code.gson:gson:2.8.2'
+        }
     }
 }
 

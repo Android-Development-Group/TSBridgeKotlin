@@ -32,7 +32,8 @@ class NetworkActivity : AppCompatActivity(), View.OnClickListener {
         when (id) {
             R.id.network_mobile_button -> intent = Intent(Settings.ACTION_DATA_ROAMING_SETTINGS)
             R.id.network_wifi_button -> intent = Intent(Settings.ACTION_WIFI_SETTINGS)
-            else -> { }
+            else -> {
+            }
         }
         if (intent != null)
             startActivity(intent)

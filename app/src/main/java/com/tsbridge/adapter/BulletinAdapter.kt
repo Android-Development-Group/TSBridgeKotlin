@@ -16,7 +16,7 @@ import org.jetbrains.anko.sdk25.coroutines.onClick
 
 class BulletinAdapter(private val mContext: Context,
                       private val mBulletins: List<ReceiveBulletin>)
-        : RecyclerView.Adapter<BulletinAdapter.ViewHolder>() {
+    : RecyclerView.Adapter<BulletinAdapter.ViewHolder>() {
     init {
         Utils.showLog("Create a BulletinAdapter object")
     }
@@ -24,8 +24,7 @@ class BulletinAdapter(private val mContext: Context,
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val bulletinItem = LayoutInflater.from(mContext)
                 .inflate(R.layout.bulletin_item, parent, false)
-        val viewHolder = ViewHolder(bulletinItem)
-        return viewHolder
+        return ViewHolder(bulletinItem)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -34,7 +33,7 @@ class BulletinAdapter(private val mContext: Context,
 
     override fun getItemCount() = mBulletins.size
 
-    inner class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bindItemView(position: Int) {
             itemView.bulletin_name.text = mBulletins[position].teacherName
             itemView.bulletin_time.text = mBulletins[position].bulletinTime
@@ -50,7 +49,7 @@ class BulletinAdapter(private val mContext: Context,
                     showFullImage(mBulletins[position].bulletinImage)
                 }
                 Utils.setImageToView(mContext, null, mBulletins[position].bulletinImage,
-                         itemView.bulletin_content_image)
+                        itemView.bulletin_content_image)
             }
             /**
              * Check if this is the last child, if yes then hide the divider, remember -1

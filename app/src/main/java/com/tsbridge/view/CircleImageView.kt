@@ -174,7 +174,7 @@ class CircleImageView : ImageView {
      * *
      */
     @Deprecated("")
-    fun setFillColor(@ColorInt fillColor: Int) {
+    private fun setFillColor(@ColorInt fillColor: Int) {
         if (fillColor == mFillColor)
             return
         mFillColor = fillColor
@@ -240,13 +240,12 @@ class CircleImageView : ImageView {
         if (drawable is BitmapDrawable)
             return drawable.bitmap
         try {
-            val bitmap: Bitmap
-            if (drawable is ColorDrawable)
-                bitmap = Bitmap.createBitmap(COLORDRAWABLE_DIMENSION,
+            val bitmap: Bitmap = if (drawable is ColorDrawable)
+                Bitmap.createBitmap(COLORDRAWABLE_DIMENSION,
                         COLORDRAWABLE_DIMENSION,
                         BITMAP_CONFIG)
             else
-                bitmap = Bitmap.createBitmap(drawable.intrinsicWidth,
+                Bitmap.createBitmap(drawable.intrinsicWidth,
                         drawable.intrinsicHeight,
                         BITMAP_CONFIG)
             val canvas = Canvas(bitmap)
@@ -261,10 +260,10 @@ class CircleImageView : ImageView {
     }
 
     private fun initializeBitmap() {
-        if (isDisableCircularTransformation)
-            mBitmap = null
+        mBitmap = if (isDisableCircularTransformation)
+            null
         else
-            mBitmap = getBitmapFromDrawable(drawable)
+            getBitmapFromDrawable(drawable)
         setup()
     }
 
