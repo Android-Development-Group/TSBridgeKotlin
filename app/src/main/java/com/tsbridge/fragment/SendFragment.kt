@@ -22,6 +22,7 @@ import com.tsbridge.activity.PermissionActivity
 import com.tsbridge.entity.Bulletin
 import com.tsbridge.utils.Utils
 import kotlinx.android.synthetic.main.send_fragment.*
+import org.jetbrains.anko.sdk25.coroutines.onClick
 import java.io.File
 
 class SendFragment : Fragment(), View.OnClickListener {
@@ -48,14 +49,24 @@ class SendFragment : Fragment(), View.OnClickListener {
         super.onActivityCreated(savedInstanceState)
         Utils.showLog("SendFragment onActivityCreated")
 
-        initialization()
+//        initialization()
+
+        send_image_sel.onClick {
+            selectImageBtn()
+        }
+        send_image_del.onClick {
+            clearImageBtn()
+        }
+        send_btn.onClick {
+            sendBulletinBtn()
+        }
     }
 
-    private fun initialization() {
-        send_image_sel.setOnClickListener(this@SendFragment)
-        send_image_del.setOnClickListener(this@SendFragment)
-        send_btn.setOnClickListener(this@SendFragment)
-    }
+//    private fun initialization() {
+//        send_image_sel.setOnClickListener(this@SendFragment)
+//        send_image_del.setOnClickListener(this@SendFragment)
+//        send_btn.setOnClickListener(this@SendFragment)
+//    }
 
     override fun onClick(view: View) {
         val id = view.id
